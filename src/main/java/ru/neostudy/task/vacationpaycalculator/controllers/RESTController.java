@@ -12,8 +12,8 @@ public class RESTController {
 
 
     @GetMapping({
-            "/calculate/{avgSalaryInYear}/{countOfVacationDays}",
-            "/calculate/{avgSalaryInYear}/{countOfVacationDays}/{vacationStart}"
+            "/calculacte/{avgSalaryInYear}/{countOfVacationDays}",
+            "/calculacte/{avgSalaryInYear}/{countOfVacationDays}/{vacationStart}"
     })
     public String calculatePay(
             @PathVariable Double avgSalaryInYear,
@@ -25,13 +25,13 @@ public class RESTController {
         return new DecimalFormat("#.##").format(result);
     }
 
-    @GetMapping("/calculate")
+    @GetMapping("/calculacte")
     public String info(){
         return """
                 How to use:
-                "/calculate - for this page
-                "/calculate/{avgSalaryInYear}/{countOfVacationDays} - for calculate including non-business days
-                "/calculate/{avgSalaryInYear}/{countOfVacationDays}/{vacationStart} - for calculate excluding non-business days
+                "/calculacte - for this page
+                "/calculacte/{avgSalaryInYear}/{countOfVacationDays} - for calculate including non-business days
+                "/calculacte/{avgSalaryInYear}/{countOfVacationDays}/{vacationStart} - for calculate excluding non-business days
                 avgSalaryInYear - Double
                 countOfVacationDays - int
                 vacationStart - String in format "yyyy-MM-dd"
