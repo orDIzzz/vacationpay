@@ -1,32 +1,32 @@
 package ru.neostudy.task.vacationpaycalculator.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.neostudy.task.vacationpaycalculator.Calculator;
 
-import java.text.DecimalFormat;
 
 @RestController
+@RequestMapping(value = "/calculacte")
 public class RESTController {
 
-
-    @GetMapping({
-            "/calculacte/{avgSalaryInYear}/{countOfVacationDays}",
-            "/calculacte/{avgSalaryInYear}/{countOfVacationDays}/{vacationStart}"
-    })
-    public String calculatePay(
-            @PathVariable Double avgSalaryInYear,
-            @PathVariable int countOfVacationDays,
-            @PathVariable(required = false) String vacationStart){
-        Double result =  vacationStart==null ?
-                new Calculator(avgSalaryInYear,countOfVacationDays).vacationPay() :
-                new Calculator(avgSalaryInYear,countOfVacationDays,vacationStart).vacationPay();
-        return new DecimalFormat("#.##").format(result);
+    @GetMapping(value = {
+            "/{avgSalaryInYear}/{countOfVacationDays}",
+            "/{avgSalaryInYear}/{countOfVacationDays}/{vacationStart}"
+            },
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Calculator> calculatePay(
+            @PathVariable(name = "avgSalaryInYear") Double avgSalaryInYear,
+            @PathVariable(name = "countOfVacationDays") int countOfVacationDays,
+            @PathVariable(required = false, name = "vacationStart") String vacationStart
+    ) {
+        return vacationStart == null ?
+                ResponseEntity.ok(new Calculator(avgSalaryInYear, countOfVacationDays)) :
+                ResponseEntity.ok(new Calculator(avgSalaryInYear, countOfVacationDays, vacationStart));
     }
 
     @GetMapping("/calculacte")
-    public String info(){
+    public String info() {
         return """
                 How to use:
                 "/calculacte - for this page

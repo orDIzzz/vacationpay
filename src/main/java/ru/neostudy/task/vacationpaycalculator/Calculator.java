@@ -1,6 +1,9 @@
 package ru.neostudy.task.vacationpaycalculator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,9 +18,13 @@ import java.util.Date;
  */
 public class Calculator {
 
+    @JsonIgnore
     private Double avgSalaryOfYear;
+    @JsonIgnore
     private int countOfVacationDays;
+    @JsonIgnore
     private String vacationStartDate;
+    private String vacationPay;
 
     /**
      * @param avgSalaryOfYear     - average salary for 12 month
@@ -28,6 +35,7 @@ public class Calculator {
         this.avgSalaryOfYear = avgSalaryOfYear;
         this.countOfVacationDays = countOfVacationDays;
         this.vacationStartDate = vacationStartDate;
+        this.vacationPay = new DecimalFormat("#.##").format(vacationPayCalc());
     }
 
     /**
@@ -37,12 +45,17 @@ public class Calculator {
     public Calculator(Double avgSalaryOfYear, int countOfVacationDays) {
         this.avgSalaryOfYear = avgSalaryOfYear;
         this.countOfVacationDays = countOfVacationDays;
+        this.vacationPay = new DecimalFormat("#.##").format(vacationPayCalc());
+    }
+
+    public String getVacationPay() {
+        return this.vacationPay;
     }
 
     /**
      * @return amount of salary in vacation including or excluding weekends
      */
-    public Double vacationPay() {
+    protected Double vacationPayCalc() {
         if (vacationStartDate == null) {
             return dayCost(avgSalaryOfYear) * countOfVacationDays;
         } else if (avgSalaryOfYear == 0d) {
@@ -60,11 +73,11 @@ public class Calculator {
      * @return cost of 1 day in vacation
      */
     private Double dayCost(Double avgSalaryOfYear) {
-        return (avgSalaryOfYear / 12) / 30;
+        return (avgSalaryOfYear / 365);
     }
 
     /**
-     * Method calculate count of days without weekends that employee will be in vacation
+     * Method calculate count of days without weekends that employee will be on vacation
      * @param vacationStartDate - vacation start date
      * @param countOfVacationDays - count of days in vacation
      * @return count of business days in vacation

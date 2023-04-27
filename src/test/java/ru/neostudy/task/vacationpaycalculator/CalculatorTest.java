@@ -7,15 +7,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CalculatorTest {
 
-    Calculator calculator;
+    Calculator calculatorIncludeWeekends;
+    Calculator calculatorExcludeWeekends;
 
     @BeforeEach
     void prepareData(){
-        calculator = new Calculator(3600d,10);
+        calculatorIncludeWeekends = new Calculator(3650d,10);
+        calculatorExcludeWeekends = new Calculator(3650d,10,"2023-04-27");
     }
 
     @Test
-    void testVacationPayExcludeBusinessDays() {
-        assertEquals(100d,calculator.vacationPay());
+    void testVacationPayIncludeWeekends() {
+        assertEquals(100d,calculatorIncludeWeekends.vacationPayCalc());
+    }
+
+    @Test
+    void testVacationPayExcludeWeekends() {
+        assertEquals(70d,calculatorExcludeWeekends.vacationPayCalc());
     }
 }
