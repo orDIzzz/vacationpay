@@ -18,11 +18,11 @@ class CalculatorTest {
 
     @Test
     void testVacationPayIncludeWeekends() {
-        assertEquals(100d,calculatorIncludeWeekends.vacationPayCalc());
+        assertEquals("100",calculatorIncludeWeekends.getVacationPay());
     }
 
     @Test
     void testVacationPayExcludeWeekends() {
-        assertEquals(70d,calculatorExcludeWeekends.vacationPayCalc());
+        assertEquals("70",calculatorExcludeWeekends.getVacationPay());
     }
 }

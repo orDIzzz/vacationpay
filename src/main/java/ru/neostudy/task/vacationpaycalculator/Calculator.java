@@ -11,17 +11,19 @@ import java.util.Date;
 
 /**
  * New instance takes 2 or 3 parameters.
- * {@linkvacationPay()} returns the amount of salary that the employee will receive on vacation.
- * If 2 arguments are passed: will be returned vacation salary without the weekend days
- * If 3 arguments are passed: will be returned vacation salary with the weekend days
- * No validating input data.
+ * {@link #vacationPayCalc() vacationPayCalc()} returns the amount of salary that the employee will receive on vacation.<br>
+ * If 2 arguments are passed: will be returned vacation salary without the weekend days<br>
+ * If 3 arguments are passed: will be returned vacation salary with the weekend days<br>
  */
 public class Calculator {
 
+
     @JsonIgnore
     private Double avgSalaryOfYear;
+
     @JsonIgnore
     private int countOfVacationDays;
+
     @JsonIgnore
     private String vacationStartDate;
     private String vacationPay;
@@ -53,9 +55,10 @@ public class Calculator {
     }
 
     /**
+     * Used in constructor
      * @return amount of salary in vacation including or excluding weekends
      */
-    protected Double vacationPayCalc() {
+    private Double vacationPayCalc() {
         if (vacationStartDate == null) {
             return dayCost(avgSalaryOfYear) * countOfVacationDays;
         } else if (avgSalaryOfYear == 0d) {
@@ -68,12 +71,11 @@ public class Calculator {
     }
 
     /**
-     * Takes abstract month of 30 days for calculating
      * @param avgSalaryOfYear - amount of salary fo 12 month
      * @return cost of 1 day in vacation
      */
     private Double dayCost(Double avgSalaryOfYear) {
-        return (avgSalaryOfYear / 365);
+        return avgSalaryOfYear / 365;
     }
 
     /**

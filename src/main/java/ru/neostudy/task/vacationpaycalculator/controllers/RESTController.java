@@ -16,9 +16,12 @@ public class RESTController {
             },
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Calculator> calculatePay(
-            @PathVariable(name = "avgSalaryInYear") Double avgSalaryInYear,
-            @PathVariable(name = "countOfVacationDays") int countOfVacationDays,
-            @PathVariable(required = false, name = "vacationStart") String vacationStart
+            @PathVariable(name = "avgSalaryInYear")
+            Double avgSalaryInYear,
+            @PathVariable(name = "countOfVacationDays")
+            int countOfVacationDays,
+            @PathVariable(required = false, name = "vacationStart")
+            String vacationStart
     ) {
         return vacationStart == null ?
                 ResponseEntity.ok(new Calculator(avgSalaryInYear, countOfVacationDays)) :
